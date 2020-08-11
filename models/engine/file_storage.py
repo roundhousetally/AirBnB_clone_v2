@@ -58,6 +58,10 @@ class FileStorage:
 
     def delete(self, obj=None):
         """ deletes obj from objz if inside """
+        if obj is None:
+            return
         k = obj.__class__.__name__ + "." + obj.id
         if k in FileStorage.__objects:
             del FileStorage.__objects[k]
+            self.save()
+            self.reload()
