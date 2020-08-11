@@ -139,6 +139,7 @@ class HBNBCommand(cmd.Cmd):
                     new_instance.__dict__[splitz[0]] = float(splitz[1])
             else:
                 pass
+        # new_instance.save()
         storage.save()
         print(new_instance.id)
         storage.save()
@@ -216,6 +217,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
+        from models import storage as pineapple
+        ppap = pineapple.all()
         print_list = []
 
         if args:
@@ -223,11 +226,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in ppap:
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in ppap:
                 print_list.append(str(v))
 
         print(print_list)
