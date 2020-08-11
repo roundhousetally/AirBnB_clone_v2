@@ -125,10 +125,13 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[args[0]]()
         for i in range(1, len(args)):
             splitz = args[i].split("=")
-            if '\"' in splitz[1]:
+            if '"' in splitz[1]:
                 if '_' in splitz[1]:
                     splitz[1] = splitz[1].replace("_", " ")
-                new_instance.__dict__[splitz[0]] = splitz[1].strip('\"')
+                splitz[1] = splitz[1][1:-1]
+                splitz[1] = splitz[1].replace("\"", r"\"")
+                print(splitz[1])
+                new_instance.__dict__[splitz[0]] = splitz[1]
             elif splitz[1].isdigit():
                 new_instance.__dict__[splitz[0]] = int(splitz[1])
             elif '.' in splitz[1]:
