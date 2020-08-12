@@ -51,10 +51,10 @@ class DBStorage:
         if cls is None:
             qry += self.__session.query(State)
             qry += self.__session.query(City)
-#           qry += self.__session.query(Amenity)
-#           qry += self.__session.query(Review)
-#           qry += self.__session.query(Place)
-#           qry += self.__session.query(User)
+            qry += self.__session.query(Amenity)
+            qry += self.__session.query(Review)
+            qry += self.__session.query(Place)
+            qry += self.__session.query(User)
         else:
             qry = self.__session.query(cls)
         ret_dict = dict()
