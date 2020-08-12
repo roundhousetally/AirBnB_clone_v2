@@ -3,7 +3,7 @@
 import cmd
 import sys
 from models.base_model import BaseModel
-from models.__init__ import storage
+# rom models.__init__ import storage
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -129,8 +129,8 @@ class HBNBCommand(cmd.Cmd):
                 if '_' in splitz[1]:
                     splitz[1] = splitz[1].replace("_", " ")
                 splitz[1] = splitz[1][1:-1]
-                splitz[1] = splitz[1].replace("\"", r"\"")
-                print(splitz[1])
+#               splitz[1] = splitz[1].replace("\"", r"\"")
+#                print(splitz[1])
                 new_instance.__dict__[splitz[0]] = splitz[1]
             elif splitz[1].isdigit():
                 new_instance.__dict__[splitz[0]] = int(splitz[1])
@@ -139,10 +139,10 @@ class HBNBCommand(cmd.Cmd):
                     new_instance.__dict__[splitz[0]] = float(splitz[1])
             else:
                 pass
-        # new_instance.save()
-        storage.save()
+        new_instance.save()
+#       print("twice? console 143")
+#       storage.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -220,19 +220,21 @@ class HBNBCommand(cmd.Cmd):
         from models import storage as pineapple
         ppap = pineapple.all()
         print_list = []
-
+#       print("ppppppppppppppppppppppppppppppppppppap")
+#       print(type(ppap))
+#       print(ppap)
         if args:
             args = args.split(' ')[0]  # remove possible trailing args
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in ppap:
+            for k, v in ppap.items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in ppap:
+            for k, v in ppap.items():
                 print_list.append(str(v))
-
+#       print("237 console HERE")
         print(print_list)
 
     def help_all(self):

@@ -3,6 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from models.city import City
 
 
 class State(BaseModel, Base):
@@ -11,6 +12,13 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
     cities = relationship('City', cascade="all, delete", backref='state')
 
+"""
+    @property
+    def cities(self):
+        ''' fucking comment '''
+        return self.cities
+"""
+"""
     @property
     def cities(self):
         ''' getter for FileStorage cities-state '''
@@ -20,3 +28,4 @@ class State(BaseModel, Base):
             if v.state_id == self.id:
                 l.append(v)
         return l
+"""
