@@ -132,10 +132,15 @@ class HBNBCommand(cmd.Cmd):
 #               splitz[1] = splitz[1].replace("\"", r"\"")
 #                print(splitz[1])
                 new_instance.__dict__[splitz[0]] = splitz[1]
+
             elif splitz[1].isdigit():
                 new_instance.__dict__[splitz[0]] = int(splitz[1])
             elif '.' in splitz[1]:
-                if splitz[1].replace(".", "").isdigit():
+                if splitz[1][0] == "-":
+                    if splitz[1][1:].replace(".", "").isdigit():
+                        new_instance.__dict__[splitz[0]] = float(splitz[1])
+
+                elif splitz[1].replace(".", "").isdigit():
                     new_instance.__dict__[splitz[0]] = float(splitz[1])
             else:
                 pass
