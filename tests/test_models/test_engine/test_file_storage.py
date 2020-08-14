@@ -5,6 +5,7 @@ from models.user import User
 from models.base_model import BaseModel
 from models import storage
 import os
+import pep8
 
 
 class test_fileStorage(unittest.TestCase):
@@ -111,3 +112,14 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
+
+class TestBaseFormat(unittest.TestCase):
+    """ test the pep8 format """
+    def test_pep8(self):
+        """ test that its pep8 ok """
+        pstyle = pep8.StyleGuide(quiet=True)
+        res = pstyle.check_files(['models/engine/file_storage.py'])
+        self.assertEqual(res.total_errors, 0, "Found code style errors (and warnings).")
+
+if __name__ == "__main__":
+    unittest.main()
