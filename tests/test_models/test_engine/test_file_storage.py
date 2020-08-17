@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 """ Module for testing file storage"""
 import unittest
+from models.user import User
 from models.base_model import BaseModel
 from models import storage
 import os
+import pep8
 
 
 class test_fileStorage(unittest.TestCase):
@@ -30,7 +32,8 @@ class test_fileStorage(unittest.TestCase):
 
     def test_new(self):
         """ New object is correctly added to __objects """
-        new = BaseModel()
+        new = User()
+        new.save()
         for obj in storage.all().values():
             temp = obj
         self.assertTrue(temp is obj)
@@ -62,11 +65,12 @@ class test_fileStorage(unittest.TestCase):
 
     def test_reload(self):
         """ Storage file is successfully loaded to __objects """
-        new = BaseModel()
-        storage.save()
+        new = User()
+        new.save()
         storage.reload()
         for obj in storage.all().values():
-            loaded = obj
+            if new.id == obj.id:
+                loaded = obj
         self.assertEqual(new.to_dict()['id'], loaded.to_dict()['id'])
 
     def test_reload_empty(self):
@@ -97,6 +101,7 @@ class test_fileStorage(unittest.TestCase):
     def test_key_format(self):
         """ Key is properly formatted """
         new = BaseModel()
+        new.save()
         _id = new.to_dict()['id']
         for key in storage.all().keys():
             temp = key
@@ -107,3 +112,14 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
+
+class TestBaseFormat(unittest.TestCase):
+    """ test the pep8 format """
+    def test_pep8(self):
+        """ test that its pep8 ok """
+        pstyle = pep8.StyleGuide(quiet=True)
+        res = pstyle.check_files(['models/engine/file_storage.py'])
+        self.assertEqual(res.total_errors, 0, "Found code style errors (and warnings).")
+
+if __name__ == "__main__":
+    unittest.main()
