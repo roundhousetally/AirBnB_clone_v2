@@ -60,7 +60,6 @@ class FileStorage:
         """ reload for deserializing json """
         self.reload()
 
-
     def delete(self, obj=None):
         """ deletes obj from objz if inside """
         if obj is None:
