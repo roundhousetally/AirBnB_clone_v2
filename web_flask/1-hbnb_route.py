@@ -9,10 +9,12 @@ def home():
     """ returns hello hb """
     return "Hello HBNB!"
 
+
 @app.route("/hbnb", strict_slashes=False)
 def hbnb():
     """ displays hbnb """
-    return "HBHB"
+    return "HBNB"
+
 
 if __name__ == "__main__":
     app.run(debug=True)
