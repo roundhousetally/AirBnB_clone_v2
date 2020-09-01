@@ -1,6 +1,7 @@
-#!/usr#!/usrython3
+#!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
+import sqlalchemy
 from os import getenv
 from models.base_model import Base
 from sqlalchemy import create_engine
@@ -26,7 +27,6 @@ class DBStorage:
                                              getenv('HBNB_MYSQL_HOST'),
                                              getenv('HBNB_MYSQL_DB')),
                                       pool_pre_ping=True)
-#       conn = self.__engine.connect()
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -38,15 +38,9 @@ class DBStorage:
                                  expire_on_commit=False)
         Session = scoped_session(SessMaker)
         self.__session = Session()
-#       print("save yourself... db 41")
-#       print(self.__session)
 
     def all(self, cls=None):
         ''' alllllllllllllllll '''
-#       print("db 46")
-#       print(type(cls))
-#       print(cls)
-#       print(self.__session)
         qry = []
         if cls is None:
             qry += self.__session.query(State)
@@ -58,13 +52,9 @@ class DBStorage:
         else:
             qry = self.__session.query(cls)
         ret_dict = dict()
-#       print(qry)
-#       print("lllllllllllllllllllllllllllllllllllllllll db 53")
         for rec in qry:
             k = rec.__class__.__name__ + "." + rec.id
             ret_dict[k] = rec
-#       print("DB 69 B4 RETURN PPAP")
-#       print(ret_dict)
         return ret_dict
 
     def new(self, obj):
@@ -75,10 +65,7 @@ class DBStorage:
 
     def save(self):
         ''' help, save me, I'm drowning. someone call the ghostbusters! '''
-#       print("SAVE ME SAVE ME db 70")
-#       print(self.__session)
         self.__session.commit()
-#       print("COMMITTED db 73")
 
     def delete(self, obj=None):
         """ NONE. NONE AT ALL """
@@ -86,3 +73,7 @@ class DBStorage:
             return
         else:
             self.__session.delete(obj)
+
+    def close(self):
+        """ closes the sqlachemy sesh """
+        self.__session.remove()

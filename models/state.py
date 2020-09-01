@@ -4,7 +4,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from models.city import City
-
+from os import environ
 
 class State(BaseModel, Base):
     """ State class """
@@ -12,12 +12,14 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
     cities = relationship('City', cascade="all, delete", backref='state')
 
-    @property
-    def cities(self):
-        ''' getter for FileStorage cities-state '''
-        from models.engine import FileStorage
-        l = []
-        for k, v in FileStorage.__objects.items():
-            if v.state_id == self.id:
-                l.append(v)
-        return l
+
+
+    if environ.get("HBNB_TYPE_STORAGE") != 'db':
+        @property
+        def cities(self):
+            ''' getter for FileStorage cities-state '''
+            l = []
+            for city in State.cities:
+                if city.state_id == self.id:
+                    l.append(city)
+                    return l
