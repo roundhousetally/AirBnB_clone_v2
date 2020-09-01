@@ -17,7 +17,7 @@ class State(BaseModel, Base):
     if environ.get("HBNB_TYPE_STORAGE") != 'db':
         @property
         def cities(self):
-            ''' getter for FileStorage cities-state '''
+            ''' getter for cities-state '''
             l = []
             for city in list(models.storage.all(City).values()):
                 if city.state_id == self.id:
